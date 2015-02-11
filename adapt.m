@@ -1,6 +1,6 @@
 function [outimage] = adapt(inimage)
 
-N=100;
+N=200;
 Constant=12;
 
     inimage = imread(inimage,'jpg');

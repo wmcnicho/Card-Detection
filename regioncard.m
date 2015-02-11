@@ -4,12 +4,15 @@ function [ region ] = regioncard( file,thresh )
 
 i = myjpgload(file,0);
 hist = dohist(i,1);
-bin = binarised(i,thresh);
+bin = binarisedlow(i,thresh);
 imshow(bin);
+morph = bin;
 morph = bwmorph(bin,'open',1);
 imshow(morph);
 label = bwlabel(morph,4);
 region = regionprops(label,['basic']);
+
+
 
 end
 
