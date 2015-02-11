@@ -1,0 +1,16 @@
+function [ bin ] = regioncard( file )
+%REGIONCARD Summary of this function goes here
+%   Detailed explanation goes here
+
+i = myjpgload(file,0);
+hist = dohist(i,1);
+bin = binarised(i,170);
+
+%image = adapt(file);
+%morph = bwmorph(image,'open',2);
+%imshow(morph);
+%label = bwlabel(morph,4);
+%region = regionprops(label,['basic']);
+
+end
+
