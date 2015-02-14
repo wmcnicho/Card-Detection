@@ -4,7 +4,7 @@ function [ output ] = cardlocation(file,show)
 
 % Load image
 I = imread(file);
-i = myjpgload(file,0);
+%i = myjpgload(file,0);
 
 disp('Starting adapt. Please wait.');
 ad = adapt(file);
@@ -54,13 +54,13 @@ height = brY-tlY;
 
 boundingBox = [tlX,tlY,width,height];
 
-num = figure;
+%num = figure;
 %figure(num);
 %imshow(morph);
 
 shapeInserter = vision.ShapeInserter('Shape','Rectangles','BorderColor','Custom','CustomBorderColor', uint8([255 0 0]));
 
-rectangle('Position',boundingBox);
+%rectangle('Position',boundingBox);
 
 output = step(shapeInserter, I, int32(boundingBox));
 

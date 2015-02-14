@@ -22,7 +22,7 @@ Constant=20;
     end
 
   %figure(3)
-  colormap(gray)
+  %colormap(gray)
   %imshow(outimage)
 
                            
