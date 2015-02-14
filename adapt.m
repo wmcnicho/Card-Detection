@@ -21,9 +21,9 @@ Constant=20;
       end
     end
 
-  figure(3)
+  %figure(3)
   colormap(gray)
-  imshow(outimage)
+  %imshow(outimage)
 
                            
 %out2 = bwmorph(outimage,'open');
