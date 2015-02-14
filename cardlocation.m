@@ -1,9 +1,10 @@
-function [ regions ] = cardlocation( file, old_thresh )
+function [ output ] = cardlocation(file,show)
 %REGIONCARD Summary of this function goes here
 %   Detailed explanation goes here
 
 % Load image
-i = myjpgload(file,1);
+I = imread(file);
+i = myjpgload(file,0);
 
 disp('Starting adapt. Please wait.');
 ad = adapt(file);
@@ -13,8 +14,6 @@ morph = bwmorph(ad,'open',16);
 %imshow(morph);
 
 %imshow(ad);
-
-bin = morph;
 
 % Finds regions
 label = bwlabel(morph,4);
@@ -31,21 +30,21 @@ brX = 0;
 brY = 0;
 
 for j = 1:length(regions)
+        
+    myVec = regions(j).BoundingBox;
     
-    [x,y,w,h] = regions.BoundingBox(n);
-    
-    if x<tlX
-        tlX = x;
+    if myVec(1)<tlX
+        tlX = myVec(1);
     end
-    if y<tlY
-        tlY = y;
+    if myVec(2)<tlY
+        tlY = myVec(2);
     end
     
-    if (x+w)<brX
-        brX = x+w;
+    if (myVec(1)+myVec(3))>brX
+        brX = myVec(1)+myVec(3);
     end
-    if (y+h)<brY
-        brY = y+h;
+    if (myVec(2)+myVec(4))>brY
+        brY = myVec(2)+myVec(4);
     end
     
 end
@@ -53,5 +52,18 @@ end
 width = brX-tlX;
 height = brY-tlY;
 
-boundingBox = [tlX,tlY,width,height]
-    
+boundingBox = [tlX,tlY,width,height];
+
+num = figure;
+%figure(num);
+%imshow(morph);
+
+shapeInserter = vision.ShapeInserter('Shape','Rectangles','BorderColor','Custom','CustomBorderColor', uint8([255 0 0]));
+
+rectangle('Position',boundingBox);
+
+output = step(shapeInserter, I, int32(boundingBox));
+
+if show > 0
+    imshow(output);
+end

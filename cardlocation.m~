@@ -1,4 +1,4 @@
-function [ regions ] = cardlocation( file, old_thresh )
+function [ regions ] = cardlocation(file)
 %REGIONCARD Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,7 +10,11 @@ ad = adapt(file);
 disp('Adapt finished.');
 
 morph = bwmorph(ad,'open',16);
-imshow(morph);
+%imshow(morph);
+
+%imshow(ad);
+
+bin = morph;
 
 % Finds regions
 label = bwlabel(morph,4);
@@ -21,31 +25,43 @@ regions = regionprops(label,['basic']);
 
 [w,h]=size(morph);
 
-tlX = [w-1,h-1];
+tlX = w-1;
 tlY = h-1;
 brX = 0;
 brY = 0;
 
 for j = 1:length(regions)
     
-    [x,y,w,h] = regions.BoundingBox(n);
+    myVec = [0,0,0,0];
     
-    if x<tlX
-        tlX = x;
+    myVec = regions(j).BoundingBox;
+    
+    if myVec(1)<tlX
+        tlX = myVec(1);
     end
-    if y<tlY
-        tlY = y;
+    if myVec(2)<tlY
+        tlY = myVec(2);
     end
     
-    if (x+w)<brX
-        brX = x+w;
+    if (myVec(1)+myVec(3))<brX
+        brX = myVec(1)+myVec(3);
     end
-    if (y+h)<brY
-        brY = y+h;
+    if (myVec(2)+myVec(4))<brY
+        brY = myVec(2)+myVec(4);
     end
     
 end
 
-width = brX-tlX;
-height = brY-tlY;
+width = -(brX-tlX);
+height = -(brY-tlY);
+
+boundingBox = [tlX,tlY,width,height];
+
+num = figure;
+figure(num);
+imshow(morph);
+
+shapeInserter = vision.ShapeInserter('Shape','Polygons','BorderColor','CustomBorderColor', uin)
+
+rectangle('Position',boundingBox);
     
