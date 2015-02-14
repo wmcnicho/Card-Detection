@@ -1,7 +1,7 @@
 function [outimage] = adapt(inimage)
 
-N=200;
-Constant=12;
+N=30;
+Constant=20;
 
     inimage = imread(inimage,'jpg');
     inimage = myrgb2gray(inimage);

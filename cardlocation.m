@@ -5,25 +5,19 @@ function [ bin ] = cardlocation( file, old_thresh )
 % Load image
 i = myjpgload(file,1);
 
+disp('Starting adapt. Please wait.');
 ad = adapt(file);
-imshow(ad);
-%{
-% Create histogram
-hist = dohist(i,2);
-% Binarised image
-thresh = findthresh(hist,1500,3);
-disp(thresh)
-bin = binarisedhigh(i,thresh);
-image(bin);
+disp('Adapt finished.');
 
-% Removes lines
-morph = bwmorph(bin,'open',4);
+morph = bwmorph(ad,'open',16);
 imshow(morph);
+
+imshow(ad);
+
 % Finds regions
-label = bwlabel(morph,4);
-card = regionprops(label,['basic']);
+%label = bwlabel(morph,4);
+%card = regionprops(label,['basic']);
 %}
 
 
 end
-
