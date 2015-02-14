@@ -1,30 +1,51 @@
-function [ bin ] = cardlocation( file, old_thresh )
+function [ regions ] = cardlocation( file, old_thresh )
 %REGIONCARD Summary of this function goes here
 %   Detailed explanation goes here
 
 % Load image
 i = myjpgload(file,1);
 
-disp("Starting adapt. Please wait");
+disp('Starting adapt. Please wait.');
 ad = adapt(file);
-imshow(ad);
-%{
-% Create histogram
-hist = dohist(i,2);
-% Binarised image
-thresh = findthresh(hist,1500,3);
-disp(thresh)
-bin = binarisedhigh(i,thresh);
-image(bin);
+disp('Adapt finished.');
 
-% Removes lines
-morph = bwmorph(bin,'open',4);
+morph = bwmorph(ad,'open',16);
 imshow(morph);
+
 % Finds regions
 label = bwlabel(morph,4);
-card = regionprops(label,['basic']);
-%}
+regions = regionprops(label,['basic']);
 
+% Find bounding box
+% Find top left corner
 
+[w,h]=size(morph);
+
+tlX = [w-1,h-1];
+tlY = h-1;
+brX = 0;
+brY = 0;
+
+for j = 1:length(regions)
+    
+    [x,y,w,h] = regions.BoundingBox(n);
+    
+    if x<tlX
+        tlX = x;
+    end
+    if y<tlY
+        tlY = y;
+    end
+    
+    if (x+w)<brX
+        brX = x+w;
+    end
+    if (y+h)<brY
+        brY = y+h;
+    end
+    
 end
 
+width = brX-tlX;
+height = brY-tlY;
+    
