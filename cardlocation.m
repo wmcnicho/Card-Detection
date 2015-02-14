@@ -10,9 +10,11 @@ ad = adapt(file);
 disp('Adapt finished.');
 
 morph = bwmorph(ad,'open',16);
-imshow(morph);
+%imshow(morph);
 
-imshow(ad);
+%imshow(ad);
+
+bin = morph;
 
 % Finds regions
 %label = bwlabel(morph,4);
