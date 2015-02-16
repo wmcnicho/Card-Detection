@@ -1,4 +1,4 @@
-function [  ] = findSymbols( regions, bin_image )
+function [ image_prop_matrix ] = findSymbols( regions, bin_image )
 %given the regions of the image, calculate the compactness of all of the
 %regions to determine which symbols are the card
 
@@ -23,8 +23,8 @@ for j = 1:length(regions)
     %pull out subimage from the boundingbox
     %subimage = bin_image(133:138, 231:234)
     subimage = bin_image(ymin:ymax, xmin:xmax);
-    figure(j);
-    imshow(subimage);
+%     figure(j);
+%     imshow(subimage);
     %get properties of the subimage
     prop = getproperties(subimage);
     
@@ -38,7 +38,7 @@ end
 %remove 0 row magics
 image_prop_matrix(any(image_prop_matrix==0,2),:) = [];
 %for now just print the matrix
-disp(image_prop_matrix);
+%disp(image_prop_matrix);
 
 end
 
