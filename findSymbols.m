@@ -3,10 +3,15 @@ function [  ] = findSymbols( regions, bin_image )
 %regions to determine which symbols are the card
 
 
-image_prop_matrix = zeros(length(regions), 3);
+image_prop_matrix = zeros(length(regions), 4);
 %iterate over the bounding boxes of the regions
 
 for j = 1:length(regions)
+    bbwidth = regions(j).BoundingBox(3);
+    bbheight = regions(j).BoundingBox(4);
+    bbratio = min(bbwidth/bbheight, bbheight/bbwidth);
+    %check to see if subimage isn't simply pixel noise
+    if((regions(j).Area > 100) && (bbratio>.5))
     
     myVec = int32(regions(j).BoundingBox);% [x, y, w, h]
     
@@ -22,12 +27,16 @@ for j = 1:length(regions)
     imshow(subimage);
     %get properties of the subimage
     prop = getproperties(subimage);
-    %add these properties to a matrix
-    image_prop_matrix(j, :) = prop;
     
+    
+    %add these properties to a matrix
+    image_prop_matrix(j, :) = [j, prop];
+    end
 
 end
 
+%remove 0 row magics
+image_prop_matrix(any(image_prop_matrix==0,2),:) = [];
 %for now just print the matrix
 disp(image_prop_matrix);
 
