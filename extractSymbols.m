@@ -1,6 +1,11 @@
-function [numberIm, symbolIm, numberProps, symbolProps] = extractSymbols( image, regions, props )
+function [numberIm, symbolIm, subPropsNumbers, subPropsSymbols] = extractSymbols( image, regions, props )
 
     [value,index] = max(props(:,2));
+    
+    sortedprops = sortrows(props,2);
+    [rows,columns] = size(sortedprops);
+    subPropsNumbers = sortedprops(rows-1:rows,:);
+    subPropsSymbols = sortedprops(1:rows-2,:);
     
     region_index = props(index,1);
     
