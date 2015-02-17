@@ -1,4 +1,4 @@
-function [numberIm, symbolIm, subPropsNumbers, subPropsSymbols] = extractSymbols( image, regions, props )
+function [numberIm, symbolIm, subPropsNumbers, subPropsSymbols] = extractSymbols( image, regions, props, isRed )
 
     [value,index] = max(props(:,2));
     
@@ -31,7 +31,9 @@ function [numberIm, symbolIm, subPropsNumbers, subPropsSymbols] = extractSymbols
     ymax = myVec(2) + myVec(4);
     
     symbolIm = image(ymin:ymax, xmin:xmax);
-    symbolProps = props(index,:);
-
+    symbolProps = props(index,2:end);
+    
+    symbolProps = [symbolProps,(isRed)];
+    
 end
 

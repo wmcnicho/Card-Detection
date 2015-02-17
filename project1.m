@@ -1,9 +1,12 @@
 function [  ] = project1( num )
 
 for j = 1:32
+    
     image_name = strcat('train', num2str(j));
     load_file_path = strcat('./data1/', image_name, '.jpg');
     directory_path = strcat('./Stage2_symbolLoc/', num2str(j), '/');
+    
+    i = importdata(load_file_path,'jpg');
 
     disp('Starting adapt. Please wait.');
     ad = adapt(load_file_path);
@@ -17,20 +20,26 @@ for j = 1:32
     regions = regionprops(label,['basic']);
 
     props = findSymbols(regions, morph);
+    
+    isRed = findRedBlack(i,regions, props);
 
-    [numberIm, symbolIm, numberProps, symbolProps] = extractSymbols(morph, regions, props);
-    full_path_num = strcat(directory_path, num2str(j), '_number.jpg');
-    imwrite(numberIm, full_path_num);
-    full_path_sym = strcat(directory_path, num2str(j), '_symbol.jpg');
-    imwrite(symbolIm, full_path_sym);
-    full_path_num_props = strcat(directory_path, num2str(j), '_number.txt');
-    FID = fopen(full_path_num_props,'w');
-    fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f\n', transpose(numberProps));
-    fclose(FID);
-    full_path_symbol_props = strcat(directory_path, num2str(j), '_symbol.txt');
-    FID = fopen(full_path_symbol_props,'w');
-    fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f\n', transpose(symbolProps));
-    fclose(FID);
+    [numberIm, symbolIm, numberProps, symbolProps] = extractSymbols(morph, regions, props, isRed);
+    
+    
+    
+    
+%     full_path_num = strcat(directory_path, num2str(j), '_number.jpg');
+%     imwrite(numberIm, full_path_num);
+%     full_path_sym = strcat(directory_path, num2str(j), '_symbol.jpg');
+%     imwrite(symbolIm, full_path_sym);
+%     full_path_num_props = strcat(directory_path, num2str(j), '_number.txt');
+%     FID = fopen(full_path_num_props,'w');
+%     fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f\n', transpose(numberProps));
+%     fclose(FID);
+%     full_path_symbol_props = strcat(directory_path, num2str(j), '_symbol.txt');
+%     FID = fopen(full_path_symbol_props,'w');
+%     fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f\n', transpose(symbolProps));
+%     fclose(FID);
     
 end
 
