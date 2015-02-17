@@ -25,11 +25,11 @@ for j = 1:32
     imwrite(symbolIm, full_path_sym);
     full_path_num_props = strcat(directory_path, num2str(j), '_number.txt');
     FID = fopen(full_path_num_props,'w');
-    fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f', numberProps);
+    fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f\n', transpose(numberProps));
     fclose(FID);
     full_path_symbol_props = strcat(directory_path, num2str(j), '_symbol.txt');
     FID = fopen(full_path_symbol_props,'w');
-    fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f', symbolProps);
+    fprintf(FID, '%1.0f, %5.4f, %5.4f, %5.4f\n', transpose(symbolProps));
     fclose(FID);
     
 end
