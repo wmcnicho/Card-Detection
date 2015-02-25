@@ -10,7 +10,7 @@ function [ image_prop_matrix ] = findSymbols( regions, bin_image, show )
 %       often not relevant
 
 %Create an all black image
-[width, height] = size(binary_image);
+[width, height] = size(bin_image);
 new_image = zeros(width, height);
 
 image_prop_matrix = zeros(length(regions), 4);
