@@ -1,4 +1,9 @@
 function [ mfinal ] = readSymProps( string )
+%READSYMPROPS Fuction used to speed up the training when the symbol data was already
+%collected. loads files from properties/[SUITNAME]/#_symbol.txt where the
+%data collected there is in the form 'region_num, prop_1, prop_2,
+%prop_3, is_red'
+%   SUITNAME can be spade, heart, club, or diamond
 
     file = strcat('properties/',string,'/');
     basenum = 0;

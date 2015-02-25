@@ -1,3 +1,4 @@
+%Script used to gather test results after training
 for i = 1 : 32
     
     image_name = strcat('test', num2str(i));

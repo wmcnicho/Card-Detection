@@ -1,3 +1,5 @@
+%Used to test various bwmorph function options
+
 file = 'data1/train1.jpg';
 
 disp('Starting adapt. Please wait.');
