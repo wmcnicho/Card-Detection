@@ -1,9 +1,19 @@
 function [ ] = filter_image_by_regions( regions, binary_image, show )
-%FILTER_REGIONS Takes the regions 
-
+%FILTER_IMAGE_BY_REGIONS Takes the regions struct produced by regionprops
+%and an image and displays a new image of only the 'relevant' regions of the
+%original image at the figure specificied by show
+%   Relevance of the symbols is determined by two heuristics
+%   1. Is the area of the region over 100 pixels
+%   2. If the ratio of the width and height of bounding box of the symbol is between .5 and 2
+%       N.B. This eliminates long regions that are usually shadows and
+%       often not relevant
 [width, height] = size(binary_image);
+
+%Create an all black image
 new_image = zeros(width, height);
 
+%iterate over the provided regions and add the symbol to the new image if
+%it passes the creteria
 for j = 1:length(regions)
     bbwidth = regions(j).BoundingBox(3);
     bbheight = regions(j).BoundingBox(4);
