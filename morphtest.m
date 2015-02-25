@@ -1,7 +1,4 @@
-function [ ] = cardlocation(file,show)
-
-I = imread(file);
-%i = myjpgload(file,0);
+file = 'data1/train1.jpg';
 
 disp('Starting adapt. Please wait.');
 ad = adapt(file);
@@ -9,13 +6,13 @@ disp('Adapt finished.');
 
 morph = ad;
 
-% morph = bwmorph(morph,'open',9001);
-% morph = bwmorph(morph,'erode',2);
-% morph = bwmorph(morph,'dilate',2);
-% se = strel('disk',2);
-% morph = imopen(morph,se);
+morph1 = bwmorph(morph,'open',1);
+morph2 = bwmorph(morph,'open',2);
 
-morph = cleanup(morph,2,2,0);
+dif = morph2-morph1;
 
+imshow(dif);
 
-imshow(morph);
+x = sum(sum(dif));
+
+disp(x);

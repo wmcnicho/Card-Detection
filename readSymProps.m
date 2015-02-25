@@ -23,7 +23,7 @@ function [ mfinal ] = readSymProps( string )
         
         m = dlmread(newfile);
         [rows,columns] = size(m);
-        m1 = m(1:rows,2:columns);
+        m1 = m(1:rows,2:columns-1);
         mfinal = [mfinal;m1];
         
     end
