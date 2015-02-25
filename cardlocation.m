@@ -1,29 +1,30 @@
 function [ regions, morphed_image ] = cardlocation(file,show)
-%REGIONCARD Summary of this function goes here
-%   Detailed explanation goes here
+%CARDLOCATION Given a jpg image of a card finds the regions of the symbols
+%and numbers and outputs an adjusted binary image separating
+%symbols/numbers from the background. Optionally shows a region on the
+%orginal image where the card region is detected
+%   This technique uses adaptive thresholding and a bwmorph open to isolate
+%   the symbols from the image. See bwmorph and adapt for more information.
 
 % Load image
 I = imread(file);
-%i = myjpgload(file,0);
 
-disp('Starting adapt. Please wait.');
+%run adaptive thresholding, this takes roughly 30 seconds
+disp('Running adaptive thresholding on image. Please wait.');
 ad = adapt(file);
-disp('Adapt finished.');
+disp('Thresholding finished.');
 
+%run morph to remove thin lines from image
 morphed_image = bwmorph(ad,'open',1);
-%imshow(morph);
-
-%imshow(ad);
 
 % Finds regions
 label = bwlabel(morphed_image,4);
 regions = regionprops(label,['basic']);
 
-% Find bounding box
-% Find top left corner
-
 [w,h]=size(morphed_image);
 
+
+%Find the top leftmost and bottom rightmost point of all of the bounding boxes
 tlX = w-1;
 tlY = h-1;
 brX = 0;
@@ -49,19 +50,12 @@ for j = 1:length(regions)
     
 end
 
+%Using these two points draw a box around the symbol regions
+%   i.e. draw a box around the card
 width = brX-tlX;
 height = brY-tlY;
-
 boundingBox = [tlX,tlY,width,height];
-
-%num = figure;
-%figure(num);
-%imshow(morph);
-
 shapeInserter = vision.ShapeInserter('Shape','Rectangles','BorderColor','Custom','CustomBorderColor', uint8([255 0 0]));
-
-%rectangle('Position',boundingBox);
-
 boxed_image = step(shapeInserter, I, int32(boundingBox));
 
 if show > 0

@@ -1,4 +1,13 @@
 function [outimage] = adapt(inimage)
+%ADAPT Takes in an image loaded from file and applies an adaptive
+%thresholding technique discussed in the labs to convert it into a binary image. The core code format was
+%given as a script but has been adjusted slighty to be used as a function.
+%
+%The constant N was determined because the symbols in the training data
+%all roughly fell within a 30x30 window.
+%The constant C (Constant) was determined through testing but a threshold
+%of 20 pixel difference between foreground and background seemed
+%reasonable.
 
 N=30;
 Constant=20;
@@ -20,19 +29,4 @@ Constant=20;
         end
       end
     end
-
-  %figure(3)
-  %colormap(gray)
-  %imshow(outimage)
-
-                           
-%out2 = bwmorph(outimage,'open');
-%figure(4)
-%colormap(gray)
-%imshow(out2)
-%out3 = bwmorph(out2,'dilate',25);
-%out4 = bwmorph(out3,'erode',25);
-%figure(5)
-%colormap(gray)
-%imshow(out4)
 
