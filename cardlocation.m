@@ -1,4 +1,4 @@
-function [ output ] = cardlocation(file,show)
+function [ regions, morphed_image ] = cardlocation(file,show)
 %REGIONCARD Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,19 +10,19 @@ disp('Starting adapt. Please wait.');
 ad = adapt(file);
 disp('Adapt finished.');
 
-morph = bwmorph(ad,'open',16);
+morphed_image = bwmorph(ad,'open',1);
 %imshow(morph);
 
 %imshow(ad);
 
 % Finds regions
-label = bwlabel(morph,4);
+label = bwlabel(morphed_image,4);
 regions = regionprops(label,['basic']);
 
 % Find bounding box
 % Find top left corner
 
-[w,h]=size(morph);
+[w,h]=size(morphed_image);
 
 tlX = w-1;
 tlY = h-1;
@@ -62,8 +62,8 @@ shapeInserter = vision.ShapeInserter('Shape','Rectangles','BorderColor','Custom'
 
 %rectangle('Position',boundingBox);
 
-output = step(shapeInserter, I, int32(boundingBox));
+boxed_image = step(shapeInserter, I, int32(boundingBox));
 
 if show > 0
-    imshow(output);
+    imshow(boxed_image);
 end

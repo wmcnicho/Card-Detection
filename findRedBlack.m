@@ -14,7 +14,7 @@ function [isRed] = findRedBlack(image,regions, props)
     norm(:,:,2) = NormalizedGreen(:,:);
     norm(:,:,3) = NormalizedBlue(:,:);
     
-    imshow(norm);
+    %imshow(norm);
     
     [value,index] = min(props(:,2));
     

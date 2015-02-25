@@ -1,0 +1,7 @@
+for i = 1 : 32
+    
+    image_name = strcat('test', num2str(i));
+    load_file_path = strcat('./data2/', image_name, '.jpg');
+    directory_path = strcat('./Stage3_classifyCard/', num2str(i), '/');
+
+end

@@ -10,6 +10,6 @@ function class = classify(v,N,Means,Invcors,Dim,Aprioris)
             IC = reshape(Invcors(i,:,:),Dim,Dim);
             evals(i) = multivariate(v,Means(i,:),IC,Aprioris(i));
         end
-        evaluations = evals'
+        evaluations = evals';
         bestclasses = find(evals == max(evals));
         class = bestclasses(1);

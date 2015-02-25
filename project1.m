@@ -1,6 +1,6 @@
 function [  ] = project1( num )
 
-for j = 1:32
+for j = num:num
     
     image_name = strcat('train', num2str(j));
     load_file_path = strcat('./data1/', image_name, '.jpg');
@@ -12,7 +12,7 @@ for j = 1:32
     ad = adapt(load_file_path);
     disp('Adapt finished.');
 
-    morph = bwmorph(ad,'open',16);
+    morph = bwmorph(ad,'open',1);
 
 
     % Finds regions
@@ -26,7 +26,36 @@ for j = 1:32
     [numberIm, symbolIm, numberProps, symbolProps] = extractSymbols(morph, regions, props, isRed);
     
     
+    predictedClasses = [];
+    suit;
     
+    if isRed
+        
+        load('trained_models/symbols_red.mat');
+        
+        for k = 1:size(symbolProps)
+            
+            predictedClasses = [predictedClasses;classify(symbolProps(k,2:end),redNumClass, redMeans, redInvcors, 3, redAprioris)];
+            
+        end
+        
+        finalClass = mode(predictedClasses)
+        
+    else
+        
+        load('trained_models/symbols_black.mat');
+        
+        for k = 1:size(symbolProps)
+            
+            predictedClasses = [predictedClasses;classify(symbolProps(k,2:end),blackNumClass, blackMeans, blackInvcors, 3, blackAprioris)];
+            
+        end
+        
+        
+        
+    end
+    
+    disp(predictedClasses);
     
 %     full_path_num = strcat(directory_path, num2str(j), '_number.jpg');
 %     imwrite(numberIm, full_path_num);
