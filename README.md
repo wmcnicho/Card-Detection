@@ -28,27 +28,22 @@ N.B. We trained our models in the trainblack and trainred functions. To use thes
 
 Detecting the location of the card for the testing set was completely successful.
 Below is an example of a bounding box drawn round the detected card.
-(data2/test27.jpg)
+
+![Bounding box example](Stage1_cardLoc/train27_out.jpg)
 
 Locating the numbers and symbols was also an all-round success.
 Below is an example of the detected numbers and symbols.
-(data2/test14.jpg)
+
+![Dectected Number](Stage2_symbolLoc/14/14_number.jpg)
+![Dectected Symbols](Stage2_symbolLoc/14/14_symbol.jpg)
+
 
 Recognising the symbols was not perfectly successful. We had an overall classification rate of (93.75%). The classification accuracy for both spades and clubs was 100%; however hearts had an accuracy of(86.7%) and for diamonds (88.3%).
 
-Classifying the symbols on the 4 of Spades (data2/test21.jpg) was successful. All 6 of the symbols were classified as spades. However, for the 3 of Diamonds (data2/test28.jpg), 3 of the symbols were classified as diamonds and 2 as hearts, which is close to causing the card itself to be misclassified.
-
+Classifying the symbols on [the 4 of Spades](data2/test21.jpg) was successful. All 6 of the symbols were classified as spades. However, for the [3 of Diamonds](data2/test28.jpg), 3 of the symbols were classified as diamonds and 2 as hearts, which is almost causes the card suit to be misclassified.
 
 Card recognition was also entirely successful. The entire testing set was classified 100% correctly.
-For an example of this success, data2/test13.jpg was classified as “3 of CLUBS”.
-
-Below are the confusion matrices for card and individual symbol recognition.
-
-Cards grouped by suit
-
-Cards grouped by value
-
-Individual symbols
+For an example of this success, [3 of Clubs](data2/test27.jpg) was classified as `“3 of CLUBS”`.
 
 # 4. Discussion
 
